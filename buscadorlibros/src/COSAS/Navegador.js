@@ -2,60 +2,61 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Libro from './Libro';
 
-
 const Navegacion = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [books, setBooks] = useState([]);
-  const [savedBooks, setSavedBooks] = useState([]);
-  const [categoryFilter, setCategoryFilter] = useState('TODOS'); // Para filtrar por categoría
 
-  // Función para agregar o eliminar un libro de la lista de guardados
-  const handleUpdateBooks = (book, action) => {
-    if (action === 'add') {
-      setSavedBooks([...savedBooks, { ...book, saved: true, category: book.category || '' }]); // Guardar libro
-    } else if (action === 'remove') {
-      setSavedBooks(savedBooks.filter(savedBook => savedBook.id !== book.id)); // Eliminar libro
+  const [textTitulo, cambiarTitulo] = useState(''); 
+  const [textAutor, cambiarAutor] = useState(''); 
+  const [lista, cambiarLista] = useState([]);
+  const [listaCategoria, cambiarListaCategoria] = useState([]);
+  const [tipoCategoria, cambiarTipoCategoria] = useState('TODOS'); 
+
+
+  const anadirLibroCategoriaeliminar = (book, accion) => {
+    if (accion === 'add') {
+      cambiarListaCategoria([...listaCategoria, { ...book, saved: true, category: book.category || '' }]); 
+
+    } else if (accion === 'remove') {
+      cambiarListaCategoria(listaCategoria.filter(savedBook => savedBook.id !== book.id)); 
+
     }
   };
 
-  // Función de búsqueda por título
-  const handleSearchByTitle = async () => {
-    setBooks([]); // Limpiar resultados previos
+  
+  const handleSearchByTitleAndAuthor = async () => {
+    cambiarLista([]); 
+    const queryParts = [];
+    
+
+    if (textTitulo) {
+      queryParts.push(`intitle:${textTitulo}`);
+    }
+    
+  
+    if (textAutor) {
+      queryParts.push(`inauthor:${textAutor}`);
+    }
+
+
+    const query = queryParts.join('+'); 
+    
     try {
-      const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:${searchTerm}`);
-      if (response.data.items) {
-        setBooks(response.data.items);
+      const resultados = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
+      if (resultados.data.items) {
+        cambiarLista(resultados.data.items);
       } else {
-        setBooks([]); // Si no hay resultados, limpiar
+        cambiarLista([]); 
       }
     } catch (error) {
-      console.error("Error al buscar libros por título: ", error);
-      setBooks([]);
+      console.error('Error al buscar libros: ', error);
+      cambiarLista([]);
     }
   };
 
-  // Función de búsqueda por autor
-  const handleSearchByAuthor = async () => {
-    setBooks([]); // Limpiar resultados previos
-    try {
-      const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=inauthor:${searchTerm}`);
-      if (response.data.items) {
-        setBooks(response.data.items);
-      } else {
-        setBooks([]);
-      }
-    } catch (error) {
-      console.error("Error al buscar libros por autor: ", error);
-      setBooks([]);
-    }
-  };
-
-  // Función de búsqueda por categoría (filtrando los libros guardados)
   const handleSearchByCategory = () => {
-    if (categoryFilter === 'TODOS') {
-      setBooks(savedBooks);
+    if (tipoCategoria === 'TODOS') {
+      cambiarLista(listaCategoria);
     } else {
-      setBooks(savedBooks.filter(book => book.category === categoryFilter));
+      cambiarLista(listaCategoria.filter(book => book.category === tipoCategoria));
     }
   };
 
@@ -63,18 +64,33 @@ const Navegacion = () => {
     <div>
       <h1>Buscador de Libros</h1>
       <div className="buscador">
-        <input
-          type="text"
-          placeholder="Buscar por título o autor"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <button onClick={handleSearchByTitle}>Buscar por título</button>
-        <button onClick={handleSearchByAuthor}>Buscar por autor</button>
+        <div>
+          <input
+            type="text"
+            placeholder="Titulo del libro"
+            value={textTitulo}
+            onChange={(e) => cambiarTitulo(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <input
+            type="text"
+            placeholder="Autor del libro"
+            value={textAutor}
+            onChange={(e) => cambiarAutor(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <button onClick={handleSearchByTitleAndAuthor}>BUSCAR</button>
+        </div>
 
         <div>
           <label>Filtrar por categoría:</label>
-          <select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
+
+          <select value={tipoCategoria} onChange={(e) => cambiarTipoCategoria(e.target.value)}>
+
             <option value="TODOS">TODOS</option>
             <option value="Aventuras">Aventuras</option>
             <option value="Ciencia Ficción">Ciencia Ficción</option>
@@ -83,19 +99,20 @@ const Navegacion = () => {
             <option value="Romántica">Romántica</option>
             <option value="Terror">Terror</option>
             <option value="Tecnología">Tecnología</option>
+
           </select>
           <button onClick={handleSearchByCategory}>Buscar por categoría</button>
         </div>
       </div>
 
       <div className="resultados">
-        {books.length === 0 && <p>No se han encontrado resultados.</p>}
-        {books.map((book) => (
+        {lista.length === 0 && <p>No se han encontrado resultados.</p>}
+        {lista.map((b) => (
           <Libro
-            key={book.id}
-            book={book}
-            onUpdateBooks={handleUpdateBooks}
-            savedBooks={savedBooks}
+            key={b.id}
+            book={b}
+            onUpdateBooks = {anadirLibroCategoriaeliminar}
+            savedBooks = {listaCategoria}
           />
         ))}
       </div>
