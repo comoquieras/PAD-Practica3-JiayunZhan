@@ -34,7 +34,7 @@ const Libro = ({ book, onUpdateBooks, savedBooks, onAccessBook }) => {
 
   return (
     <div className="libro">
-      <h2 onClick={handleAccessBook} style={{ cursor: 'pointer', color: 'blue' }}>
+      <h2 onClick={handleAccessBook} >
         {titulo}
       </h2>
       <p><strong>Autor:</strong> {autor}</p>

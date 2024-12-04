@@ -111,7 +111,7 @@ const Navegacion = () => {
             <option value="Terror">Terror</option>
             <option value="Tecnología">Tecnología</option>
           </select>
-          <button onClick={handleSearchByCategory}>Buscar por categoría</button>
+          <button onClick={handleSearchByCategory}>Filtrar</button>
         </div>
       </div>
 
