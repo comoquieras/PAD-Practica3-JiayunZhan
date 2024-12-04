@@ -1,78 +1,69 @@
-/* Contenedor principal donde se muestran los libros */
-.resultados {
-    display: flex;
-    flex-wrap: wrap; /* Permite que los libros se ajusten a nuevas filas */
-    gap: 20px; /* Espacio entre los libros */
-    justify-content: flex-start; /* Alinea los libros desde el inicio */
-    margin-top: 20px;
-    padding: 0 10px; /* Espacio interno para el contenedor */
-  }
-  
-  /* Contenedor individual de cada libro */
-  .libro {
+/* Contenedor principal del libro */
+.libro {
     background-color: #f9f9f9;
     border-radius: 6px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-    width: calc(33.33% - 20px); /* Cada libro ocupa el 33% del ancho, con un pequeño margen */
+    width: calc(33.33% - 10px); /* Tres libros por fila */
     box-sizing: border-box;
     padding: 15px;
-    margin-bottom: 20px; /* Margen inferior para el espaciado entre las filas */
+    margin-bottom: 15px;
     display: flex;
-    flex-direction: column; /* Organiza el contenido del libro de arriba hacia abajo */
-    justify-content: space-between; /* Asegura que los botones se queden al fondo del bloque */
-    min-height: 450px; /* Tamaño mínimo fijo para todos los bloques */
-    max-height: 450px; /* Tamaño máximo para evitar que los bloques se estiren demasiado */
-    overflow: hidden; /* Previene que los elementos se salgan del contenedor */
+    flex-direction: column;
+    justify-content: space-between;
+    height: 500px; /* Altura fija del bloque */
+    overflow: hidden; /* Ocultar desbordes */
     position: relative;
   }
   
-  /* Títulos de los libros */
-  .libro h2 {
-    font-size: 18px;
+  /* Imagen del libro (portada) */
+  .libro-portada {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  /* Contenedor del contenido desplazable */
+  .libro-contenido {
+    flex-grow: 1;
+    overflow-y: auto; /* Agrega barra de desplazamiento si el contenido excede */
+    margin-bottom: 10px;
+  }
+  
+  /* Estilo de los títulos */
+  .titulo-libro {
+    font-size: 16px;
     color: #007bff;
     cursor: pointer;
-    margin-bottom: 8px; /* Añade un pequeño espacio debajo del título */
+    margin-bottom: 8px;
   }
   
-  /* Detalles del libro (autor y fecha) */
-  .libro .detalles {
-    display: flex;
-    justify-content: space-between; /* Distribuye los elementos a lo largo de la fila */
-    align-items: center; /* Alinea los elementos verticalmente al centro */
-    margin-bottom: 8px; /* Espacio entre autor y fecha */
+  .titulo-libro:hover {
+    text-decoration: underline;
   }
   
-  .libro p {
+  /* Información del libro */
+  .autor-libro,
+  .fecha-libro,
+  .descripcion-libro {
     font-size: 14px;
     color: #333;
-    margin: 0 5px; /* Reduce el espacio entre autor y fecha */
-    flex-grow: 1; /* Hace que la descripción ocupe el espacio disponible */
-  }
-  
-  /* Descripción del libro (se mostrará si existe) */
-  .libro .descripcion {
-    font-size: 13px;
-    color: #333;
-    margin-bottom: 12px; /* Espacio entre la descripción y los demás elementos */
-    line-height: 1.5; /* Aumenta la altura de línea para mayor legibilidad */
-    height: 80px; /* Altura fija para la descripción, pero ajustable */
-    overflow: hidden; /* Limita la descripción a una cantidad determinada de líneas */
-    text-overflow: ellipsis; /* Muestra "..." al final si se excede */
-    display: block;
+    margin-bottom: 6px;
   }
   
   /* Selector de categoría */
-  .libro select {
-    padding: 6px; /* Reducido el padding para que se vea más compacto */
+  .select-categoria {
+    padding: 8px;
     font-size: 14px;
-    width: 100%; /* Ajusta el ancho */
-    margin-bottom: 10px; /* Espacio entre el selector y el botón */
+    width: 100%;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
   
   /* Botón de añadir/eliminar */
-  .libro button {
+  .boton-accion {
     padding: 8px 14px;
     font-size: 14px;
     background-color: #007bff;
@@ -82,25 +73,22 @@
     cursor: pointer;
     transition: background-color 0.3s;
     width: 100%;
-    margin-top: 10px; /* Esto crea espacio entre el contenido y el botón */
   }
   
-  .libro button:hover {
+  .boton-accion:hover {
     background-color: #0056b3;
   }
   
   /* Responsividad para pantallas más pequeñas */
   @media (max-width: 768px) {
     .libro {
-      width: calc(50% - 20px); /* Dos libros por fila en pantallas más pequeñas */
-      height: auto; /* Deja que la altura sea flexible en pantallas pequeñas */
+      width: calc(50% - 10px); /* Dos libros por fila */
     }
   }
   
   @media (max-width: 480px) {
     .libro {
-      width: 100%; /* Un solo libro por fila en pantallas muy pequeñas */
-      height: auto; /* Deja que la altura sea flexible en pantallas pequeñas */
+      width: 100%; /* Un libro por fila */
     }
   }
   

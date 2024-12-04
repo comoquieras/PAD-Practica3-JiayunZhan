@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import './Libro.css';
 
-
 const Libro = ({ book, onUpdateBooks, savedBooks, onAccessBook }) => {
-  const [category, setCategory] = useState(book.category || ''); 
+  const [category, setCategory] = useState(book.category || '');
 
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);
@@ -26,7 +25,9 @@ const Libro = ({ book, onUpdateBooks, savedBooks, onAccessBook }) => {
   const fecha = book.volumeInfo?.publishedDate || 'Fecha de publicación no disponible';
   const desc = book.volumeInfo?.description || '';
   const infoLink = book.volumeInfo?.infoLink || '#';
+  const imagen = book.volumeInfo?.imageLinks?.thumbnail || ''; // Portada del libro
 
+  // Truncar descripción a 555 caracteres
   const truncatedDescription = desc.length > 555 ? desc.substring(0, 555) + '...' : desc;
 
   const handleAccessBook = () => {
@@ -36,13 +37,19 @@ const Libro = ({ book, onUpdateBooks, savedBooks, onAccessBook }) => {
 
   return (
     <div className="libro">
-      <h2 onClick={handleAccessBook} >
-        {titulo}
-      </h2>
-      <p><strong>Autor:</strong> {autor}</p>
-      <p><strong>Fecha de publicación:</strong> {fecha}</p>
-      <p>{truncatedDescription}</p>
-      <select value={category} onChange={handleCategoryChange}>
+      {/* Portada del libro */}
+      {imagen && <img src={imagen} alt={`Portada de ${titulo}`} className="libro-portada" />}
+
+      {/* Información del libro (contenedor desplazable) */}
+      <div className="libro-contenido">
+        <h2 onClick={handleAccessBook} className="titulo-libro">{titulo}</h2>
+        <p className="autor-libro"><strong>Autor:</strong> {autor}</p>
+        <p className="fecha-libro"><strong>Fecha de publicación:</strong> {fecha}</p>
+        <p className="descripcion-libro">{truncatedDescription}</p>
+      </div>
+
+      {/* Selección de categoría */}
+      <select value={category} onChange={handleCategoryChange} className="select-categoria">
         <option value="">Seleccionar categoría</option>
         <option value="Aventuras">Aventuras</option>
         <option value="Ciencia Ficción">Ciencia Ficción</option>
@@ -52,7 +59,9 @@ const Libro = ({ book, onUpdateBooks, savedBooks, onAccessBook }) => {
         <option value="Terror">Terror</option>
         <option value="Tecnología">Tecnología</option>
       </select>
-      <button onClick={handleSaveOrRemove}>
+
+      {/* Botón de añadir/eliminar */}
+      <button onClick={handleSaveOrRemove} className="boton-accion">
         {isBookSaved() ? 'Eliminar de la lista' : 'Añadir a la lista'}
       </button>
     </div>
