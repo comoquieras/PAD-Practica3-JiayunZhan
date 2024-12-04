@@ -26,13 +26,20 @@ const Libro = ({ book, onUpdateBooks, savedBooks }) => {
   const author = book.volumeInfo?.authors ? book.volumeInfo.authors.join(', ') : 'Autor no disponible';
   const publishedDate = book.volumeInfo?.publishedDate || 'Fecha de publicación no disponible';
   const description = book.volumeInfo?.description || '';
+  const infoLink = book.volumeInfo?.infoLink || '#'; // Enlace al libro, con valor por defecto
 
   // Truncar la descripción si es demasiado larga
   const truncatedDescription = description.length > 150 ? description.substring(0, 555) + '...' : description;
 
   return (
     <div className="libro">
-      <h2>{title}</h2>
+      {/* Hacer el título clicable */}
+      <h2>
+        <a href={infoLink} target="_blank" rel="noopener noreferrer" className="titulo-link">
+          {title}
+        </a>
+      </h2>
+
       <p><strong>Autor:</strong> {author}</p>
       <p><strong>Fecha de publicación:</strong> {publishedDate}</p>
       
