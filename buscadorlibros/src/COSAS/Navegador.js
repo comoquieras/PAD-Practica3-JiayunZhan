@@ -9,47 +9,43 @@ const Navegacion = () => {
   const [lista, cambiarLista] = useState([]);
   const [listaCategoria, cambiarListaCategoria] = useState([]);
   const [tipoCategoria, cambiarTipoCategoria] = useState('TODOS'); 
+  const [ultimosAccesos, cambiarUltimosAccesos] = useState([]);
 
-  // Cargar libros guardados al inicio desde localStorage
+  // Cargar datos iniciales de localStorage
   useEffect(() => {
     const librosGuardados = JSON.parse(localStorage.getItem('listaCategoria')) || [];
+    const accesosGuardados = JSON.parse(localStorage.getItem('ultimosAccesos')) || [];
     cambiarListaCategoria(librosGuardados);
+    cambiarUltimosAccesos(accesosGuardados);
+    cambiarLista(accesosGuardados); // Inicializa la lista con los últimos accesos al cargar
   }, []);
 
-  // Función para guardar la lista de libros en el localStorage
-  const guardarListaEnLocalStorage = (nuevaLista) => {
-    localStorage.setItem('listaCategoria', JSON.stringify(nuevaLista));
+  // Guardar datos en localStorage
+  const guardarEnLocalStorage = (clave, data) => {
+    localStorage.setItem(clave, JSON.stringify(data));
   };
 
   const anadirLibroCategoriaeliminar = (book, accion) => {
-
     let nuevaListaCategoria = [...listaCategoria];
-
     if (accion === 'add') {
       nuevaListaCategoria.push({ ...book, saved: true, category: book.category || '' });
     } else if (accion === 'remove') {
       nuevaListaCategoria = nuevaListaCategoria.filter(savedBook => savedBook.id !== book.id); 
     }
-
-    // Actualizamos el estado y guardamos en localStorage
     cambiarListaCategoria(nuevaListaCategoria);
-    guardarListaEnLocalStorage(nuevaListaCategoria);
+    guardarEnLocalStorage('listaCategoria', nuevaListaCategoria);
   };
 
   const handleSearchByTitleAndAuthor = async () => {
     cambiarLista([]); 
     const queryParts = [];
-    
-    if (textTitulo) {
-      queryParts.push(`intitle:${textTitulo}`);
-    }
-    
-    if (textAutor) {
-      queryParts.push(`inauthor:${textAutor}`);
-    }
-
+    if (textTitulo) queryParts.push(`intitle:${textTitulo}`);
+    if (textAutor) queryParts.push(`inauthor:${textAutor}`);
     const query = queryParts.join('+'); 
-    
+    if (!query) {
+      cambiarLista(ultimosAccesos); // Si la búsqueda está vacía, muestra últimos accesos
+      return;
+    }
     try {
       const resultados = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
       if (resultados.data.items) {
@@ -69,6 +65,12 @@ const Navegacion = () => {
     } else {
       cambiarLista(listaCategoria.filter(book => book.category === tipoCategoria));
     }
+  };
+
+  const registrarUltimoAcceso = (book) => {
+    const nuevosAccesos = [book, ...ultimosAccesos.filter(a => a.id !== book.id)].slice(0, 5);
+    cambiarUltimosAccesos(nuevosAccesos);
+    guardarEnLocalStorage('ultimosAccesos', nuevosAccesos);
   };
 
   return (
@@ -121,6 +123,7 @@ const Navegacion = () => {
             book={b}
             onUpdateBooks={anadirLibroCategoriaeliminar}
             savedBooks={listaCategoria}
+            onAccessBook={registrarUltimoAcceso}
           />
         ))}
       </div>
