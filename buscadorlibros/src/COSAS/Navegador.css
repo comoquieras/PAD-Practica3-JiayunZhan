@@ -1,0 +1,101 @@
+.Navegador {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f4f7fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .Navegador h1 {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+    width: 100%;
+  }
+  
+  input, select {
+    padding: 12px;
+    font-size: 16px;
+    margin-right: 10px;
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+  
+  button {
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 500px;
+    margin-top: 10px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  button:active {
+    background-color: #004080;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  button, select {
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  input:focus, button:focus, select:focus {
+    outline: none;
+  }
+  
+  input::placeholder {
+    color: #aaa;
+  }
+  
+  select {
+    padding: 12px 20px;
+    font-size: 16px;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s;
+  }
+  
+  select:focus {
+    border-color: #007bff;
+    background-color: #ffffff;
+    outline: none;
+  }
+  
+  select:hover {
+    background-color: #f1f1f1;
+  }
+  
