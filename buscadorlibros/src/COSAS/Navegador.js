@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'; 
 import axios from 'axios';
 import Libro from './Libro';
+import './Navegador.css';
 
 const Navegacion = () => {
 
@@ -47,7 +48,7 @@ const Navegacion = () => {
       return;
     }
     try {
-      const resultados = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
+      const resultados = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=21`);
       if (resultados.data.items) {
         cambiarLista(resultados.data.items);
       } else {
@@ -111,7 +112,7 @@ const Navegacion = () => {
             <option value="Terror">Terror</option>
             <option value="Tecnología">Tecnología</option>
           </select>
-          <button onClick={handleSearchByCategory}>Filtrar</button>
+          <button onClick={handleSearchByCategory}>FILTRAR</button>
         </div>
       </div>
 

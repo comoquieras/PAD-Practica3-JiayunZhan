@@ -1,0 +1,95 @@
+/* Contenedor principal del buscador */
+.buscador {
+    margin: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilos de los inputs de búsqueda */
+  .buscador input {
+    padding: 8px;
+    font-size: 14px;
+    width: 220px; /* Ancho moderado para los inputs */
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  /* Botón de búsqueda */
+  .buscador button {
+    padding: 8px 14px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 12px;
+    transition: background-color 0.3s;
+  }
+  
+  .buscador button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Filtro de categoría */
+  .buscador select {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 220px; /* Igual que los inputs */
+    margin-bottom: 12px;
+  }
+  
+  /* Estilo para la lista de resultados */
+  .resultados {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los libros se ajusten a nuevas filas */
+    gap: 15px; /* Espacio entre los libros */
+    justify-content: flex-start; /* Alinea los libros desde el inicio */
+    margin-top: 20px;
+  }
+  
+  .resultados p {
+    font-size: 16px;
+    color: #333;
+  }
+  
+  /* Estilo para los botones y elementos interactivos dentro de la sección de resultados */
+  .resultados button {
+    padding: 8px 14px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .resultados button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Contenedor de los elementos de búsqueda y filtros */
+  .buscador div {
+    margin-bottom: 12px;
+  }
+  
+  /* Responsividad para pantallas pequeñas */
+  @media (max-width: 768px) {
+    .libro {
+      width: calc(50% - 10px); /* Dos libros por fila en pantallas más pequeñas */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .libro {
+      width: 100%; /* Un solo libro por fila en pantallas muy pequeñas */
+    }
+  }
+  

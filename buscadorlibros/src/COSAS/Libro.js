@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import './Libro.css';
+
 
 const Libro = ({ book, onUpdateBooks, savedBooks, onAccessBook }) => {
   const [category, setCategory] = useState(book.category || ''); 
