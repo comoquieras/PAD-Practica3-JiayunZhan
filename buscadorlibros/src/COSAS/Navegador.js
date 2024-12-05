@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Libro from './Libro';
 import './Navegador.css';
+import Carrusel from './Carrusel.js';
 
 const Navegacion = () => {
   const [textTitulo, cambiarTitulo] = useState(''); 
@@ -46,8 +47,7 @@ const Navegacion = () => {
     if (textAutor) queryParts.push(`inauthor:${textAutor}`);
     const query = queryParts.join('+');
     if (!query) {
-      cambiarLista(ultimosAccesos);
-      return;
+      return; // No realizar ninguna acción si no hay título o autor
     }
     try {
       const resultados = await axios.get(
@@ -58,14 +58,15 @@ const Navegacion = () => {
         cambiarMostrarMas(resultados.data.totalItems > start + 9); // Controlar si hay más resultados
         cambiarStartIndex(start + 9); // Incrementar índice
       } else {
-        cambiarLista([]);
+        cambiarLista([]); // Vaciar la lista si no hay resultados
         cambiarMostrarMas(false); // Ocultar el botón si no hay más resultados
       }
     } catch (error) {
       console.error('Error al buscar libros: ', error);
-      cambiarLista([]);
+      cambiarLista([]); // Vaciar la lista en caso de error
     }
   };
+  
 
   const handleSearchByCategory = () => {
     if (tipoCategoria === 'TODOS') {
@@ -84,6 +85,9 @@ const Navegacion = () => {
   return (
     <div>
       <h1 className = "encabezado"> Buscador de Libros </h1>
+     
+      <Carrusel libros={ultimosAccesos} />
+     
       <div className="buscador">
         <div>
           <input
@@ -124,7 +128,7 @@ const Navegacion = () => {
       </div>
 
       <div className="resultados">
-        {lista.length === 0 && <p>No se han encontrado resultados.</p>}
+        {lista.length === 0 && <p className="NoResultados">No se han encontrado resultados.</p>}
         {lista.map((b) => (
           <Libro
             key={b.id}
@@ -138,7 +142,7 @@ const Navegacion = () => {
 
       {mostrarMas && (
         <div className="mostrar">
-          <button onClick={() => handleSearchByTitleAndAuthor(startIndex)}>Mas</button>
+          <button onClick={() => handleSearchByTitleAndAuthor(startIndex)}>MAS</button>
         </div>
       )}
     </div>
