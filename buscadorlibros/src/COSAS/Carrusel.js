@@ -36,28 +36,34 @@ const Carrusel = ({ libros }) => {
       </button>
 
       <div className="carrusel-vista">
-        {librosEnPantalla.map((libro, index) => (
-          <div key={index} className="carrusel-item">
-            <img
-              src={libro.volumeInfo?.imageLinks?.thumbnail || 'placeholder.png'}
-              alt={libro.volumeInfo?.title || 'Sin título'}
-              className="carrusel-imagen"
-            />
-            <h3 className="carrusel-titulo">
-              <a
-                href={libro.volumeInfo?.infoLink || '#'}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="carrusel-enlace"
-              >
-                {libro.volumeInfo?.title || 'Título no disponible'}
-              </a>
-            </h3>
-            <p className="carrusel-fecha">
-              {libro.volumeInfo?.publishedDate || 'Fecha no disponible'}
-            </p>
-          </div>
-        ))}
+        {librosEnPantalla.map((libro, index) => {
+          const tieneImagen = libro.volumeInfo?.imageLinks?.thumbnail;
+
+          return (
+            <div key={index} className="carrusel-item">
+              {tieneImagen && (
+                <img
+                  src={libro.volumeInfo.imageLinks.thumbnail}
+                  alt={libro.volumeInfo?.title || 'Sin título'}
+                  className="carrusel-imagen"
+                />
+              )}
+              <h3 className="carrusel-titulo">
+                <a
+                  href={libro.volumeInfo?.infoLink || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="carrusel-enlace"
+                >
+                  {libro.volumeInfo?.title || 'Título no disponible'}
+                </a>
+              </h3>
+              <p className="carrusel-fecha">
+                {libro.volumeInfo?.publishedDate || 'Fecha no disponible'}
+              </p>
+            </div>
+          );
+        })}
       </div>
 
       <button

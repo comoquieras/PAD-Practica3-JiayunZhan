@@ -36,11 +36,11 @@ const Libro = ({ book: b, onUpdateBooks, savedBooks, onAccessBook }) => {
 
   return (
     <div className="libro">
-      {/* Portada del libro */}
-      {imagen && <img src={imagen} alt={`Portada de ${titulo}`} className="libro-portada" />}
-
-      {/* Información del libro (contenedor desplazable) */}
+      
+     
       <div className="libro-contenido">
+        {imagen && <img src={imagen} alt={`Portada de ${titulo}`} className="libro-portada" />}
+
         <h2 onClick={handleAccessBook} className="titulo-libro">{titulo}</h2>
         <p className="autor-libro"><strong>Autor:</strong> {autor}</p>
         <p className="fecha-libro"><strong>Fecha de publicación:</strong> {fecha}</p>
