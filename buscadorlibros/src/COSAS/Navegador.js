@@ -22,7 +22,7 @@ const Navegacion = () => {
     cambiarLista(accesosGuardados);
   }, []);
 
-  const guardarEnLocalStorage = (clave, data) => {
+  const guardarEnLocal = (clave, data) => {
     localStorage.setItem(clave, JSON.stringify(data));
   };
 
@@ -34,7 +34,7 @@ const Navegacion = () => {
       nuevaListaCategoria = nuevaListaCategoria.filter(savedBook => savedBook.id !== book.id); 
     }
     cambiarListaCategoria(nuevaListaCategoria);
-    guardarEnLocalStorage('listaCategoria', nuevaListaCategoria);
+    guardarEnLocal('listaCategoria', nuevaListaCategoria);
   };
 
   const handleSearchByTitleAndAuthor = async (start = 0) => {
@@ -47,23 +47,23 @@ const Navegacion = () => {
     if (textAutor) queryParts.push(`inauthor:${textAutor}`);
     const query = queryParts.join('+');
     if (!query) {
-      return; // No realizar ninguna acción si no hay título o autor
+      return; 
     }
     try {
       const resultados = await axios.get(
         `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=9&startIndex=${start}`
       );
       if (resultados.data.items) {
-        cambiarLista(prevLista => [...prevLista, ...resultados.data.items]); // Añadir a la lista existente
-        cambiarMostrarMas(resultados.data.totalItems > start + 9); // Controlar si hay más resultados
-        cambiarStartIndex(start + 9); // Incrementar índice
+        cambiarLista(prevLista => [...prevLista, ...resultados.data.items]); 
+        cambiarMostrarMas(resultados.data.totalItems > start + 9); 
+        cambiarStartIndex(start + 9); 
       } else {
-        cambiarLista([]); // Vaciar la lista si no hay resultados
-        cambiarMostrarMas(false); // Ocultar el botón si no hay más resultados
+        cambiarLista([]); 
+        cambiarMostrarMas(false); 
       }
     } catch (error) {
       console.error('Error al buscar libros: ', error);
-      cambiarLista([]); // Vaciar la lista en caso de error
+      cambiarLista([]); 
     }
   };
   
@@ -79,7 +79,7 @@ const Navegacion = () => {
   const registrarUltimoAcceso = (book) => {
     const nuevosAccesos = [book, ...ultimosAccesos.filter(a => a.id !== book.id)].slice(0, 5);
     cambiarUltimosAccesos(nuevosAccesos);
-    guardarEnLocalStorage('ultimosAccesos', nuevosAccesos);
+    guardarEnLocal('ultimosAccesos', nuevosAccesos);
   };
 
   return (

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './Libro.css';
 
-const Libro = ({ book, onUpdateBooks, savedBooks, onAccessBook }) => {
-  const [category, setCategory] = useState(book.category || '');
+const Libro = ({ book: b, onUpdateBooks, savedBooks, onAccessBook }) => {
+  const [category, setCategory] = useState(b.category || '');
 
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);
@@ -10,28 +10,27 @@ const Libro = ({ book, onUpdateBooks, savedBooks, onAccessBook }) => {
 
   const handleSaveOrRemove = () => {
     if (isBookSaved()) {
-      onUpdateBooks(book, 'remove');
+      onUpdateBooks(b, 'remove');
     } else {
-      onUpdateBooks({ ...book, category }, 'add');
+      onUpdateBooks({ ...b, category }, 'add');
     }
   };
 
   const isBookSaved = () => {
-    return savedBooks.some(savedBook => savedBook.id === book.id);
+    return savedBooks.some(savedBook => savedBook.id === b.id);
   };
 
-  const titulo = book.volumeInfo?.title || 'Título no disponible';
-  const autor = book.volumeInfo?.authors ? book.volumeInfo.authors.join(', ') : 'Autor no disponible';
-  const fecha = book.volumeInfo?.publishedDate || 'Fecha de publicación no disponible';
-  const desc = book.volumeInfo?.description || '';
-  const infoLink = book.volumeInfo?.infoLink || '#';
-  const imagen = book.volumeInfo?.imageLinks?.thumbnail || ''; // Portada del libro
+  const titulo = b.volumeInfo?.title || 'Título no disponible';
+  const autor = b.volumeInfo?.authors ? b.volumeInfo.authors.join(', ') : 'Autor no disponible';
+  const fecha = b.volumeInfo?.publishedDate || 'Fecha de publicación no disponible';
+  const desc = b.volumeInfo?.description || '';
+  const infoLink = b.volumeInfo?.infoLink || '#';
+  const imagen = b.volumeInfo?.imageLinks?.thumbnail || ''; // Portada del libro
 
-  // Truncar descripción a 555 caracteres
-  const truncatedDescription = desc.length > 555 ? desc.substring(0, 555) + '...' : desc;
+ const truncatedDescription = desc.length > 555 ? desc.substring(0, 555) + '...' : desc;
 
   const handleAccessBook = () => {
-    onAccessBook(book); // Registrar acceso completo
+    onAccessBook(b); 
     window.open(infoLink, '_blank');
   };
 
@@ -45,7 +44,7 @@ const Libro = ({ book, onUpdateBooks, savedBooks, onAccessBook }) => {
         <h2 onClick={handleAccessBook} className="titulo-libro">{titulo}</h2>
         <p className="autor-libro"><strong>Autor:</strong> {autor}</p>
         <p className="fecha-libro"><strong>Fecha de publicación:</strong> {fecha}</p>
-        <p className="descripcion-libro">{truncatedDescription}</p>
+        <p className="descripcion-libro">{ desc}</p>
       </div>
 
       {/* Selección de categoría */}

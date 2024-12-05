@@ -9,26 +9,26 @@ const Carrusel = ({ libros }) => {
   const botonAnteriorHabilitado = startIndex > 0;
   const botonSiguienteHabilitado = startIndex + librosPorVista < libros.length;
 
-  const handleNext = () => {
+  const siguienteLibro = () => {
     if (botonSiguienteHabilitado) {
       setStartIndex((prevIndex) => prevIndex + 1);
     }
   };
 
-  const handlePrevious = () => {
+  const anteriorLibro = () => {
     if (botonAnteriorHabilitado) {
       setStartIndex((prevIndex) => prevIndex - 1);
     }
   };
 
   if (!libros || libros.length === 0) {
-    return <p>No hay libros disponibles para mostrar en el carrusel.</p>;
+    return <p> En blanco </p>;
   }
 
   return (
     <div className="carrusel">
       <button
-        onClick={handlePrevious}
+        onClick={anteriorLibro}
         className={`carrusel-boton ${!botonAnteriorHabilitado ? 'deshabilitado' : ''}`}
         disabled={!botonAnteriorHabilitado}
       >
@@ -61,7 +61,7 @@ const Carrusel = ({ libros }) => {
       </div>
 
       <button
-        onClick={handleNext}
+        onClick={siguienteLibro}
         className={`carrusel-boton ${!botonSiguienteHabilitado ? 'deshabilitado' : ''}`}
         disabled={!botonSiguienteHabilitado}
       >
