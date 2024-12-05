@@ -1,27 +1,26 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect } from 'react';  
 import axios from 'axios';
 import Libro from './Libro';
 import './Navegador.css';
 
 const Navegacion = () => {
-
   const [textTitulo, cambiarTitulo] = useState(''); 
   const [textAutor, cambiarAutor] = useState(''); 
   const [lista, cambiarLista] = useState([]);
   const [listaCategoria, cambiarListaCategoria] = useState([]);
   const [tipoCategoria, cambiarTipoCategoria] = useState('TODOS'); 
   const [ultimosAccesos, cambiarUltimosAccesos] = useState([]);
+  const [startIndex, cambiarStartIndex] = useState(0); // Nuevo: índice para cargar más resultados
+  const [mostrarMas, cambiarMostrarMas] = useState(false); // Nuevo: controla si mostrar el botón de cargar más
 
-  // Cargar datos iniciales de localStorage
   useEffect(() => {
     const librosGuardados = JSON.parse(localStorage.getItem('listaCategoria')) || [];
     const accesosGuardados = JSON.parse(localStorage.getItem('ultimosAccesos')) || [];
     cambiarListaCategoria(librosGuardados);
     cambiarUltimosAccesos(accesosGuardados);
-    cambiarLista(accesosGuardados); // Inicializa la lista con los últimos accesos al cargar
+    cambiarLista(accesosGuardados);
   }, []);
 
-  // Guardar datos en localStorage
   const guardarEnLocalStorage = (clave, data) => {
     localStorage.setItem(clave, JSON.stringify(data));
   };
@@ -37,22 +36,30 @@ const Navegacion = () => {
     guardarEnLocalStorage('listaCategoria', nuevaListaCategoria);
   };
 
-  const handleSearchByTitleAndAuthor = async () => {
-    cambiarLista([]); 
+  const handleSearchByTitleAndAuthor = async (start = 0) => {
+    if (start === 0) {
+      cambiarLista([]); 
+      cambiarStartIndex(0); // Reinicia el índice al buscar
+    }
     const queryParts = [];
     if (textTitulo) queryParts.push(`intitle:${textTitulo}`);
     if (textAutor) queryParts.push(`inauthor:${textAutor}`);
-    const query = queryParts.join('+'); 
+    const query = queryParts.join('+');
     if (!query) {
-      cambiarLista(ultimosAccesos); // Si la búsqueda está vacía, muestra últimos accesos
+      cambiarLista(ultimosAccesos);
       return;
     }
     try {
-      const resultados = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=21`);
+      const resultados = await axios.get(
+        `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=9&startIndex=${start}`
+      );
       if (resultados.data.items) {
-        cambiarLista(resultados.data.items);
+        cambiarLista(prevLista => [...prevLista, ...resultados.data.items]); // Añadir a la lista existente
+        cambiarMostrarMas(resultados.data.totalItems > start + 9); // Controlar si hay más resultados
+        cambiarStartIndex(start + 9); // Incrementar índice
       } else {
-        cambiarLista([]); 
+        cambiarLista([]);
+        cambiarMostrarMas(false); // Ocultar el botón si no hay más resultados
       }
     } catch (error) {
       console.error('Error al buscar libros: ', error);
@@ -76,7 +83,7 @@ const Navegacion = () => {
 
   return (
     <div>
-      <h1>Buscador de Libros</h1>
+      <h1 className = "encabezado"> Buscador de Libros </h1>
       <div className="buscador">
         <div>
           <input
@@ -97,7 +104,7 @@ const Navegacion = () => {
         </div>
 
         <div>
-          <button onClick={handleSearchByTitleAndAuthor}>BUSCAR</button>
+          <button onClick={() => handleSearchByTitleAndAuthor()}>BUSCAR</button>
         </div>
 
         <div>
@@ -128,6 +135,12 @@ const Navegacion = () => {
           />
         ))}
       </div>
+
+      {mostrarMas && (
+        <div className="mostrar">
+          <button onClick={() => handleSearchByTitleAndAuthor(startIndex)}>Mas</button>
+        </div>
+      )}
     </div>
   );
 };

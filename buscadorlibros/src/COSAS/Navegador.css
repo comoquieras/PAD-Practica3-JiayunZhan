@@ -1,4 +1,27 @@
-/* Contenedor principal del buscador */
+
+/*Buscador de Libro*/
+.encabezado {
+  font-size: 32px;
+  font-weight: bold; 
+  color: #333; 
+  text-align: center;
+  margin: 20px 0;
+  text-transform: uppercase;
+  letter-spacing: 1.5px; 
+}
+
+.encabezado::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px; 
+  background-color: #007bff; 
+  margin: 10px auto; 
+  border-radius: 2px; 
+}
+
+
+/*El bloque de text y boton para buscar*/
 .buscador {
     margin: 20px;
     padding: 15px;
@@ -7,18 +30,18 @@
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
   }
   
-  /* Estilos de los inputs de búsqueda */
+  /* text para buscar*/
   .buscador input {
     padding: 8px;
     font-size: 14px;
-    width: 220px; /* Ancho moderado para los inputs */
+    width: 220px; 
     margin-bottom: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
   }
   
-  /* Botón de búsqueda */
+  /* Boton de buscar */
   .buscador button {
     padding: 8px 14px;
     font-size: 14px;
@@ -35,22 +58,22 @@
     background-color: #0056b3;
   }
   
-  /* Filtro de categoría */
+  /* Lista desplegable de categoria */
   .buscador select {
     padding: 8px;
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 220px; /* Igual que los inputs */
+    width: 220px; 
     margin-bottom: 12px;
   }
   
-  /* Estilo para la lista de resultados */
+  /* Eesultados*/
   .resultados {
     display: flex;
-    flex-wrap: wrap; /* Permite que los libros se ajusten a nuevas filas */
-    gap: 15px; /* Espacio entre los libros */
-    justify-content: flex-start; /* Alinea los libros desde el inicio */
+    flex-wrap: wrap; 
+    gap: 15px;
+    justify-content: flex-start; 
     margin-top: 20px;
   }
   
@@ -59,7 +82,7 @@
     color: #333;
   }
   
-  /* Estilo para los botones y elementos interactivos dentro de la sección de resultados */
+  /* Botones de resultado*/
   .resultados button {
     padding: 8px 14px;
     font-size: 14px;
@@ -75,21 +98,49 @@
     background-color: #0056b3;
   }
   
-  /* Contenedor de los elementos de búsqueda y filtros */
   .buscador div {
     margin-bottom: 12px;
   }
   
-  /* Responsividad para pantallas pequeñas */
+  /* Ajustes para pantallas mas pequenas si en una fila no puede caber tres resultados */
   @media (max-width: 768px) {
     .libro {
-      width: calc(50% - 10px); /* Dos libros por fila en pantallas más pequeñas */
+      width: calc(50% - 10px); 
     }
   }
   
   @media (max-width: 480px) {
     .libro {
-      width: 100%; /* Un solo libro por fila en pantallas muy pequeñas */
+      width: 100%; 
     }
   }
   
+
+  /* Mostrar mas resultados */
+.mostrar {
+  text-align: center; 
+  margin: 20px 0; 
+}
+
+/* Botón "MAS" */
+.mostrar button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.mostrar button:hover {
+  background-color: #0056b3; 
+  transform: scale(1.05); 
+}
+
+.mostrar button:active {
+  background-color: #0056b3;
+  transform: scale(0.95); 
+}
