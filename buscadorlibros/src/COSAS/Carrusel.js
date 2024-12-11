@@ -22,7 +22,7 @@ const Carrusel = ({ libros }) => {
   };
 
   if (!libros || libros.length === 0) {
-    return <p> En blanco </p>;
+    return <p className="inicioZero"> En blanco </p>;
   }
 
   return (

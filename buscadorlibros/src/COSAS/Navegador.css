@@ -102,12 +102,11 @@
 .libro .contenido {
   flex-grow: 1;
   padding: 10px;
-  text-align: center; /* Centra texto dentro del bloque */
+  text-align: center; 
 }
 
-/* Botón centrado */
 .libro button {
-  margin: 10px auto; /* Auto a los lados lo centra */
+  margin: 10px auto; 
   padding: 8px 14px;
   font-size: 14px;
   background-color: #007bff;
@@ -118,16 +117,15 @@
   transition: background-color 0.3s;
 }
 
-/* Lista desplegable centrada */
+
 .libro select {
-  margin: 10px auto; /* Auto a los lados lo centra */
+  margin: 10px auto; 
   padding: 8px;
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-/* Ajustes para pantallas más pequeñas */
 @media (max-width: 768px) {
   .libro {
     width: calc(50% - 10px); /* Ajusta para 2 columnas */
