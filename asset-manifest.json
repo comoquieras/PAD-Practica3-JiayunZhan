@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/PAD-Practica3-JiayunZhan/static/css/main.3578ef0b.css",
-    "main.js": "/PAD-Practica3-JiayunZhan/static/js/main.83664c85.js",
+    "main.css": "/PAD-Practica3-JiayunZhan/static/css/main.9bf9848b.css",
+    "main.js": "/PAD-Practica3-JiayunZhan/static/js/main.dc4df5b9.js",
     "static/js/453.261a0f75.chunk.js": "/PAD-Practica3-JiayunZhan/static/js/453.261a0f75.chunk.js",
     "index.html": "/PAD-Practica3-JiayunZhan/index.html",
-    "main.3578ef0b.css.map": "/PAD-Practica3-JiayunZhan/static/css/main.3578ef0b.css.map",
-    "main.83664c85.js.map": "/PAD-Practica3-JiayunZhan/static/js/main.83664c85.js.map",
+    "main.9bf9848b.css.map": "/PAD-Practica3-JiayunZhan/static/css/main.9bf9848b.css.map",
+    "main.dc4df5b9.js.map": "/PAD-Practica3-JiayunZhan/static/js/main.dc4df5b9.js.map",
     "453.261a0f75.chunk.js.map": "/PAD-Practica3-JiayunZhan/static/js/453.261a0f75.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.3578ef0b.css",
-    "static/js/main.83664c85.js"
+    "static/css/main.9bf9848b.css",
+    "static/js/main.dc4df5b9.js"
   ]
 }
