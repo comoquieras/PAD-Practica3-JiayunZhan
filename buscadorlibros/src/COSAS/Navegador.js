@@ -26,6 +26,12 @@ const Navegacion = () => {
     localStorage.setItem(clave, JSON.stringify(data));
   };
 
+  const limpiarUltimosAccesos = () => {
+    localStorage.removeItem('ultimosAccesos');
+  };
+
+
+
   const anadirLibroCategoriaeliminar = (book, accion) => {
     let nuevaListaCategoria = [...listaCategoria];
     if (accion === 'add') {
@@ -47,6 +53,9 @@ const Navegacion = () => {
     if (textAutor) queryParts.push(`inauthor:${textAutor}`);
     const query = queryParts.join('+');
     if (!query) {
+      
+        
+    
       return; 
     }
     try {
@@ -54,6 +63,7 @@ const Navegacion = () => {
         `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=9&startIndex=${start}`
       );
       if (resultados.data.items) {
+        localStorage.removeItem('ultimosAccesos');
         cambiarLista(prevLista => [...prevLista, ...resultados.data.items]); 
         cambiarMostrarMas(resultados.data.totalItems > start + 9); 
         cambiarStartIndex(start + 9); 
